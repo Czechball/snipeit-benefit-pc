@@ -45,9 +45,14 @@ OS=$(echo $JSON_INPUT | jq -r '.custom_fields."Operační systém".value')
 PRICE=$(echo $JSON_INPUT | jq -r '.custom_fields."Prodejní cena".value')
 #echo $JSON_INPUT | jq -r .custom_fields.
 
-IMAGEMAGICK_TEMPLATE="convert -font Helvetica -fill white -pointsize 350 -gravity SouthWest -annotate +300+800 'Line1\nLine2\nLine3\nLine4' -antialias '$IMG_FILE' '$ASSET_ID-$MODEL_NAME-inzerat-foto.jpg'"
-
 #echo $IMAGEMAGICK_TEMPLATE
+
+FONT="Helvetica"
+FILL="white"
+GRAVITY="NorthWest"
+POINTSIZE="150"
+OFFSETX="+200"
+OFFSETY="+200"
 
 print_laptop()
 {
@@ -58,6 +63,10 @@ print_laptop()
 
 	printf "Vytváření náhledového obrázku..."
 
+	convert -font $FONT -fill $FILL -pointsize $POINTSIZE -gravity $GRAVITY -annotate $OFFSETX$OFFSETY "$MANUFACTURER $MODEL_NAME\n$CPU\n$RAM\n$HDD\n$SCREEN\nBaterie: $BAT\n$OS" -antialias $IMG_FILE $ASSET_ID-inzerat-foto.jpg
+	convert -font $FONT -fill $FILL -pointsize 400 -gravity SouthEast -annotate +116+87 "$PRICE Kč" -antialias $ASSET_ID-inzerat-foto.jpg $ASSET_ID-inzerat-foto.jpg
+
+	printf " hotovo.\n"
 }
 
 print_desktop()
@@ -67,7 +76,11 @@ print_desktop()
 	printf "Výrobce:		$MANUFACTURER\nModel:			$MODEL_NAME\nProcesor:		$CPU\nPaměť:			$RAM\nDisk:			$HDD\nGrafická karta:		$GPU\nOperační systém:	$OS"
 	printf "\n\n--- CENA: $PRICE Kč ---\n"
 
-	printf "Vytváření náhledového obrázku..."	
+	printf "Vytváření náhledového obrázku..."
+
+	convert -font $FONT -fill $FILL -pointsize $POINTSIZE -gravity $GRAVITY -annotate $OFFSETX$OFFSETY "" -antialias $IMG_FILE $ASSET_ID-inzerat-foto.jpg
+
+	printf " hotovo. \n"
 }
 
 print_monitor()
