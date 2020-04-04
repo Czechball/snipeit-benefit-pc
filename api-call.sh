@@ -6,7 +6,6 @@ HEADER1='accept: application/json'
 HEADER2="authorization: Bearer $TOKEN"
 HEADER3='content-type: application/json'
 
-
 ASSET_ID="$1"
 IMG_FILE="$2"
 
@@ -78,14 +77,15 @@ print_desktop()
 
 	printf "Vytváření náhledového obrázku..."
 
-	convert -font $FONT -fill $FILL -pointsize $POINTSIZE -gravity $GRAVITY -annotate $OFFSETX$OFFSETY "" -antialias $IMG_FILE $ASSET_ID-inzerat-foto.jpg
+	convert -font $FONT -fill $FILL -pointsize $POINTSIZE -gravity $GRAVITY -annotate $OFFSETX$OFFSETY "$MANUFACTURER $MODEL_NAME\n$CPU\n$RAM\n$HDD\n$OS" -antialias $IMG_FILE $ASSET_ID-inzerat-foto.jpg
+	convert -font $FONT -fill $FILL -pointsize 400 -gravity SouthEast -annotate +116+87 "$PRICE Kč" -antialias $ASSET_ID-inzerat-foto.jpg $ASSET_ID-inzerat-foto.jpg
 
 	printf " hotovo. \n"
 }
 
 print_monitor()
 {
-	echo monito
+	echo monitor
 	exit
 }
 
